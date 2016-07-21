@@ -127,7 +127,6 @@ Returns:
     STEALTH_CONTEXT*    RemoteCtx = NULL;
     CONTEXT             Context;
     HANDLE              hHijackedThread = NULL;
-	DWORD				hijackedThreadId = 0;
     HANDLE              hCompletionEvent = NULL;
 	HANDLE              hSyncEvent = NULL;
     SIZE_T              BytesRead = 0;
@@ -204,8 +203,6 @@ Returns:
 
 			// if thread was active, it is now suspended...
 			IsSuspended = TRUE;
-
-			hijackedThreadId = NativeEntry.th32ThreadID;
 
 			break;
 		}
@@ -315,7 +312,7 @@ Returns:
 	if(!WriteProcessMemory(hProc, (UCHAR*)RemoteCtx + GetStealthStubSize(), &LocalCtx, sizeof(LocalCtx), &BytesRead))
         THROW(STATUS_INTERNAL_ERROR, L"Unable to write remote context.");
 
-	if(!WriteProcessMemory(hProc, (UCHAR*)RemoteCtx, GetStealthStubPtr(), GetStealthStubSize(), &BytesRead))
+	if(!WriteProcessMemory(hProc, RemoteCtx, GetStealthStubPtr(), GetStealthStubSize(), &BytesRead))
         THROW(STATUS_INTERNAL_ERROR, L"Unable to write remote stealth stub.");
 
 	// resume thread
@@ -328,7 +325,6 @@ Returns:
 
 	// TODO:
 	//::PostThreadMessage(HijackedThreadId, 
-	//PostThreadMessage(hijackedThreadId, WM_NULL, 0, 0);
 
 	/*
 		Wait for completion and process results...

@@ -73,38 +73,6 @@ Returns:
     NULL if no memory could be allocated, a valid pointer otherwise.
 
 */
-	ULONG pageSize;
-	return LhAllocateMemoryEx(InEntryPoint, &pageSize);
-}
-
-///////////////////////////////////////////////////////////////////////////////////
-/////////////////////// LhAllocateMemoryEx
-///////////////////////////////////////////////////////////////////////////////////
-void* LhAllocateMemoryEx(void* InEntryPoint, ULONG* OutPageSize)
-{
-/*
-Description:
-
-    Allocates one page of hook specific memory. The page size is returned in OutPageSize
-
-Parameters:
-
-    - InEntryPoint
-
-        Ignored for 32-Bit versions and drivers. In 64-Bit user mode, the returned
-        pointer will always be in a 31-bit boundary around this parameter. This way
-        a relative jumper can still be placed instead of having to consume much more entry
-        point bytes for an absolute jump!
-
-    - OutPageSize
-
-        Will be updated to contain the page size.
-
-Returns:
-
-    NULL if no memory could be allocated, a valid pointer otherwise.
-
-*/
 
     UCHAR*			    Res = NULL;
 
@@ -123,7 +91,6 @@ Returns:
     GetSystemInfo(&SysInfo);
 
     PAGE_SIZE = SysInfo.dwPageSize;
-    *OutPageSize = PAGE_SIZE;
 #endif
 
 
@@ -167,10 +134,7 @@ Returns:
     if(Res == NULL)
 	    return NULL;
 #else
-    
-	*OutPageSize = PAGE_SIZE;
-	// in 32-bit mode the trampoline will always be reachable
-	// In 64-bit driver mode we use an absolute address so the trampoline will always be reachable
+    // in 32-bit mode the trampoline will always be reachable
     if((Res = (UCHAR*)RtlAllocateMemory(TRUE, PAGE_SIZE)) == NULL)
         return NULL;
 

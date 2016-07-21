@@ -111,11 +111,11 @@ LONG RtlAnsiSubString(
 LONGLONG RtlAnsiHexToLongLong(const CHAR *s, int len)
 {
 	// Almost equivalent behaviour to strtol (but long long and doesn't support signed hex)
+	int c;
+	LONGLONG rc = 0;
 	const char *start = s;
 	if ('0' == s[0] && ('x' == s[1] || 'X' == s[1]))
 		s += 2;
-	int c;
-	LONGLONG rc = 0;
 	for (rc = 0; (s - start < len && '\0' != (c = *s)); s++) {
 		if (c >= 'a' && c <= 'f') {
 			c = c - 'a' + 10;

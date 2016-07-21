@@ -103,8 +103,6 @@ void LhCriticalFinalize();
 
 void* LhAllocateMemory(void* InEntryPoint);
 
-void* LhAllocateMemoryEx(void* InEntryPoint, ULONG* OutPageSize);
-
 void LhFreeMemory(PLOCAL_HOOK_INFO* RefHandle);
 
 HOOK_ACL* LhBarrierGetAcl();

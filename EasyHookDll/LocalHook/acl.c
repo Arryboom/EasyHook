@@ -121,7 +121,7 @@ EASYHOOK_NT_EXPORT LhSetExclusiveACL(
 /*
 Description:
 
-    Sets an exclusive hook local ACL based on the given thread ID list.
+    Sets an inclusive hook local ACL based on the given thread ID list.
     
 Parameters:
     - InThreadIdList

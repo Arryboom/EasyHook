@@ -51,17 +51,22 @@
 extern "C"{
 #endif
 
-#ifdef EASYHOOK_EXPORTS
-    #define EASYHOOK_API						__declspec(dllexport) __stdcall
-	#define DRIVER_SHARED_API(type, decl)		EXTERN_C type EASYHOOK_API decl
+#ifdef EASYHOOK_LIB
+	#define EASYHOOK_API					__stdcall
+	#define DRIVER_SHARED_API(type, decl)	typedef type EASYHOOK_API PROC_##decl; EXTERN_C type EASYHOOK_API decl
 #else
-    #ifndef DRIVER
-        #define EASYHOOK_API					__declspec(dllimport) __stdcall
-		#define DRIVER_SHARED_API(type, decl)	EXTERN_C type EASYHOOK_API decl
-    #else
-        #define EASYHOOK_API					__stdcall
-		#define DRIVER_SHARED_API(type, decl)	typedef type EASYHOOK_API PROC_##decl; EXTERN_C type EASYHOOK_API decl
-    #endif
+	#ifdef EASYHOOK_EXPORTS
+		#define EASYHOOK_API						__declspec(dllexport) __stdcall
+		#define DRIVER_SHARED_API(type, decl)		EXTERN_C type EASYHOOK_API decl
+	#else
+		#ifndef DRIVER
+			#define EASYHOOK_API					__declspec(dllimport) __stdcall
+			#define DRIVER_SHARED_API(type, decl)	EXTERN_C type EASYHOOK_API decl
+		#else
+			#define EASYHOOK_API					__stdcall
+			#define DRIVER_SHARED_API(type, decl)	typedef type EASYHOOK_API PROC_##decl; EXTERN_C type EASYHOOK_API decl
+		#endif
+	#endif
 #endif
 
 /* 
@@ -73,7 +78,7 @@ extern "C"{
 #define EASYHOOK_NT_EXPORT          EXTERN_C NTSTATUS EASYHOOK_API
 #define EASYHOOK_BOOL_EXPORT        EXTERN_C BOOL EASYHOOK_API
 
-#define MAX_HOOK_COUNT              1024
+#define MAX_HOOK_COUNT              128
 #define MAX_ACE_COUNT               128
 #define MAX_THREAD_COUNT            128
 #define MAX_PASSTHRU_SIZE           1024 * 64
