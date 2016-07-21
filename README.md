@@ -1,3 +1,12 @@
+# 欢迎使用 EasyHook
+
+该项目从 EasyHook fork 而来，在原项目的基础之上增加了一部分内容，并将项目升级到 Visual Studio 2015。升级后的项目有如下内容：
+
+ - EasyHookDll
+ - EasyHookDll64
+ - EasyHookLib
+ - EasyHookLib64
+
 # Welcome to EasyHook - The reinvention of Windows API Hooking
 
 [![Join the chat at https://gitter.im/EasyHook/EasyHook](https://badges.gitter.im/EasyHook/EasyHook.svg)](https://gitter.im/EasyHook/EasyHook?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
