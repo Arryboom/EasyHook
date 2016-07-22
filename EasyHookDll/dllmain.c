@@ -31,10 +31,17 @@ HMODULE             hCurrentModule = NULL;
 DWORD               RhTlsIndex;
 HANDLE              hEasyHookHeap = NULL;
 
-BOOL APIENTRY DllMain( HMODULE hModule,
-                       DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-					 )
+#ifdef EASYHOOK_LIB
+EXTERN_C BOOL APIENTRY EasyHookLib_DllMain(HMODULE hModule,
+	DWORD  ul_reason_for_call,
+	LPVOID lpReserved
+)
+#else
+BOOL APIENTRY DllMain(HMODULE hModule,
+	DWORD  ul_reason_for_call,
+	LPVOID lpReserved
+)
+#endif
 {
 #ifdef _DEBUG
     int CurrentFlags;

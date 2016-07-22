@@ -11,6 +11,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EasyHookLib", "EasyHookDll\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EasyHookLib64", "EasyHookDll\EasyHookLib64.vcxproj", "{F4A40955-0F82-4E36-90DB-32B086FBD4F3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExampleDll", "ExampleDll\ExampleDll.vcxproj", "{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{201F9007-06E4-46AC-8916-58AD8D9E879A} = {201F9007-06E4-46AC-8916-58AD8D9E879A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -61,6 +66,18 @@ Global
 		{F4A40955-0F82-4E36-90DB-32B086FBD4F3}.Release|Win32.ActiveCfg = Release|x64
 		{F4A40955-0F82-4E36-90DB-32B086FBD4F3}.Release|x64.ActiveCfg = Release|x64
 		{F4A40955-0F82-4E36-90DB-32B086FBD4F3}.Release|x64.Build.0 = Release|x64
+		{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}.Debug|Win32.Build.0 = Debug|Win32
+		{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}.Debug|x64.ActiveCfg = Debug|x64
+		{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}.Debug|x64.Build.0 = Debug|x64
+		{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}.Release|Win32.ActiveCfg = Release|Win32
+		{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}.Release|Win32.Build.0 = Release|Win32
+		{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}.Release|x64.ActiveCfg = Release|x64
+		{71C41EEF-4A31-4CCE-82A4-8ED2CA129E3E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
