@@ -55,23 +55,8 @@
 extern "C"{
 #endif
 
-#ifdef EASYHOOK_LIB
-	#define EASYHOOK_API					__stdcall
-	#define DRIVER_SHARED_API(type, decl)	typedef type EASYHOOK_API PROC_##decl; EXTERN_C type EASYHOOK_API decl
-#else
-	#ifdef EASYHOOK_EXPORTS
-		#define EASYHOOK_API						__declspec(dllexport) __stdcall
-		#define DRIVER_SHARED_API(type, decl)		EXTERN_C type EASYHOOK_API decl
-	#else
-		#ifndef DRIVER
-			#define EASYHOOK_API					__declspec(dllimport) __stdcall
-			#define DRIVER_SHARED_API(type, decl)	EXTERN_C type EASYHOOK_API decl
-		#else
-			#define EASYHOOK_API					__stdcall
-			#define DRIVER_SHARED_API(type, decl)	typedef type EASYHOOK_API PROC_##decl; EXTERN_C type EASYHOOK_API decl
-		#endif
-	#endif
-#endif
+#define EASYHOOK_API __stdcall
+#define DRIVER_SHARED_API(type, decl) typedef type EASYHOOK_API PROC_##decl; EXTERN_C type EASYHOOK_API decl
 
 /* 
     This is the typical sign that a defined method is exported...
