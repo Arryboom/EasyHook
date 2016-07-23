@@ -3,12 +3,6 @@
 #include "easyhook.h"
 #include "DriverShared.h"
 
-#ifndef _WIN64
-#pragma comment(lib, "EasyHookLib.lib")
-#else
-#pragma comment(lib, "EasyHookLib64.lib")
-#endif
-
 EASYHOOK_BOOL_EXPORT EasyHookDllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved);
 
 // NtCreateFile µÄº¯ÊýÖ¸Õë

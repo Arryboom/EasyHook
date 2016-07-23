@@ -1,11 +1,13 @@
 # 欢迎使用 EasyHook
 
-该项目从 EasyHook fork 而来，在原项目的基础之上增加了一部分内容，并将项目升级到 Visual Studio 2015。升级后的项目有如下内容：
+该项目从 EasyHook fork 而来，在原项目的基础之上将 Dll 修改为 Lib 静态连接库，并写了一个示例程序 ExampleDll，可以通过注入的或 AppInit_Dlls 的方式将 Dll 注入到进程中测试。
 
- - EasyHookDll
- - EasyHookDll64
+示例程序 ExampleDll 分 32 位和 64 位版本，注入后会监控 NtCreateFile 函数，可以通过 DebugView 工具查看 Dll 的输出。
+
  - EasyHookLib
  - EasyHookLib64
+ - ExampleDll
+ - ExampleDll64
 
 # Welcome to EasyHook - The reinvention of Windows API Hooking
 
