@@ -85,7 +85,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>EasyHookLib64.Lib;AUX_ULIB_x64.LIB;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>EasyHookLib64.Lib;AUX_ULIB_x64.LIB;Psapi.lib;comsuppw.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)x64\Release;$(SolutionDir)EasyHookDll</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
