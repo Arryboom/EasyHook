@@ -65,19 +65,37 @@ NTSTATUS NTAPI NtCreateFileHook(OUT PHANDLE FileHandle,
 		IoStatusBlock, AllocationSize, FileAttributes, ShareAccess,
 		CreateDisposition, CreateOptions, EaBuffer, EaLength);
 
-	CString csOutput;
+	if (CreateDisposition >= FILE_CREATE)
+	{
+		CString csOutput;
+		CString csFileName = _T("");
 
-	if (IoStatusBlock->Information == FILE_CREATED &&		// 文件创建成功
-		CreateDisposition > FILE_CREATE)					// 大于创建文件的参数
-	{
-		csOutput.Format(_T("%s:%ld 创建文件 %s"), szCurrentProcessName, dwCurrentProcessId, ObjectAttributes->ObjectName->Buffer);
-		OutputDebugString(csOutput);
-	}
-	if (IoStatusBlock->Information == FILE_OVERWRITTEN &&	// 文件覆写成功
-		CreateDisposition > FILE_CREATE)					// 大于创建文件的参数
-	{
-		csOutput.Format(_T("%s:%ld 修改文件 %s"), szCurrentProcessName, dwCurrentProcessId, ObjectAttributes->ObjectName->Buffer);
-		OutputDebugString(csOutput);
+		// 处理 cmd.exe 下创建文件路径为空的问题
+		if (NULL != ObjectAttributes->RootDirectory)
+		{
+			TCHAR szCurrentDirectory[MAX_PATH];
+			GetCurrentDirectory(MAX_PATH, szCurrentDirectory);
+			csFileName += szCurrentDirectory;
+			csFileName += _T("\\");
+		}
+
+		csFileName += ObjectAttributes->ObjectName->Buffer;
+
+		switch (IoStatusBlock->Information)
+		{
+		case FILE_CREATED:
+		{
+			csOutput.Format(_T("%s:%ld 创建文件 %s"), szCurrentProcessName, dwCurrentProcessId, csFileName);
+			OutputDebugString(csOutput);
+		}
+			break;
+		case FILE_OVERWRITTEN:
+		{
+			csOutput.Format(_T("%s:%ld 修改文件 %s"), szCurrentProcessName, dwCurrentProcessId, csFileName);
+			OutputDebugString(csOutput);
+		}
+			break;
+		}
 	}
 
 	/*csOutput.Format(_T("IoStatusBlock = 0x%08X, ObjectName = %s, FileAttributes = 0x%08X, ShareAccess = 0x%08X, CreateDisposition  = 0x%08X, CreateOptions = 0x%08X\n"),
@@ -106,6 +124,8 @@ NTSTATUS NTAPI NtCreateUserProcessHook(
 )
 {
 	NTSTATUS ntStatus;
+
+	// 调用系统的 NtCreateUserProcess
 	ntStatus = pfnNtCreateUserProcess(ProcessHandle, ThreadHandle, ProcessDesiredAccess,
 		ThreadDesiredAccess, ProcessObjectAttributes, ThreadObjectAttributes,
 		CreateProcessFlags, CreateThreadFlags, ProcessParameters,
@@ -225,6 +245,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	// 调用 EasyHook 的入口处理函数
 	EasyHookDllMain(hModule, ul_reason_for_call, lpReserved);
 
+	// 获取要 Hook 的函数原地址
 	pfnNtCreateFile = (pfnNTCREATEFILE)GetProcAddress(GetModuleHandle(_T("ntdll.dll")), "NtCreateFile");
 	pfnNtCreateUserProcess = (pfnNTCREATEUSERPROCESS)GetProcAddress(GetModuleHandle(_T("ntdll.dll")), "NtCreateUserProcess");
 
@@ -232,7 +253,6 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	{
 	case DLL_PROCESS_ATTACH:
 	{
-		// 调用 InstallHook 的线程
 		StartHookThread();
 	}
 	break;
@@ -242,7 +262,6 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 		break;
 	case DLL_PROCESS_DETACH:
 	{
-		// 调用 UnInstallHook 的线程
 		UnInstallHook();
 	}
 	break;
